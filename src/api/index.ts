@@ -9,7 +9,7 @@ import {
     IValidatorsResponse
 } from "./types";
 
-enum NETWORK_TYPE {
+export enum NETWORK_TYPE {
     MAINNET = 'mainnet',
     TESTNET = 'testnet',
 }

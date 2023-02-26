@@ -1,5 +1,5 @@
 export interface IDelegation {
-    delegator_address: string;
+    ["delegator-address"]: string;
     amount: number;
     reward: number;
     undelegations: any[]; // not sure about the type
@@ -16,7 +16,7 @@ export interface IValidator {
     address: string;
     name: string;
     rate: string;
-    total_stake: string;
+    total_stake: number;
     uptime_percentage: number | null;
     identity: string;
     hasLogo: boolean;
@@ -48,8 +48,8 @@ export interface IValidatorFull extends IValidator {
     delegations: IDelegation[];
     hasLogo: boolean;
     self_stake: number;
-    total_stake: string;
-    average_stake: string;
+    total_stake: number;
+    average_stake: number;
     average_stake_by_bls: number;
     remainder: string;
     voting_power: any; // not sure about the type

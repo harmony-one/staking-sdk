@@ -1,4 +1,4 @@
-const { StakingContract, StakingAPI } = require("..");
+const { StakingContract, StakingAPI } = require("harmony-staking-sdk");
 
 const displayUserBalanse = async (accountAddress, stakingContract) => {
     // check the balance of the account associated with the contract instance
