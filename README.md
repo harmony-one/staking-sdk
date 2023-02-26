@@ -26,9 +26,48 @@ The `StakingContract` class allows you to delegate tokens to validators, undeleg
 
 Example:
 
-javascriptCopy code
+```js
+import { StakingContract } from 'harmony-staking-sdk';
 
-``import { StakingContract } from 'harmony-staking-sdk';  const stakingContract = new StakingContract({   rpcUrl: 'https://api.harmony.one',   privateKey: 'YOUR_PRIVATE_KEY',   contractAddress: '0x00000000000000000000000000000000000000FC',   gasPrice: '100',   gasPriceRewards: '200',   gasLimit: '25000' });  await stakingContract.delegate('VALIDATOR_ADDRESS', 'AMOUNT_IN_ETHER', tx => {   console.log(`Transaction hash: ${tx}`); });  await stakingContract.unDelegate('VALIDATOR_ADDRESS', 'AMOUNT_IN_ETHER', tx => {   console.log(`Transaction hash: ${tx}`); });  await stakingContract.collectRewards(tx => {   console.log(`Transaction hash: ${tx}`); });  await stakingContract.send('RECEIVER_ADDRESS', 'AMOUNT_IN_ETHER', tx => {   console.log(`Transaction hash: ${tx}`); });``
+const stakingContract = new StakingContract({
+  // Set the RPC endpoint for the Harmony network
+  rpcUrl: 'https://api.harmony.one',
+  // Set your private key for signing transactions
+  privateKey: 'YOUR_PRIVATE_KEY',
+});
+
+// Delegate some amount of ONE tokens to a validator
+await stakingContract.delegate(
+  'VALIDATOR_ADDRESS', 
+  'AMOUNT_IN_ETHER', 
+  tx => { 
+    console.log(`Transaction hash: ${tx}`);
+  }
+);
+
+// Undelegate some amount of ONE tokens from a validator
+await stakingContract.unDelegate(
+  'VALIDATOR_ADDRESS', 
+  'AMOUNT_IN_ETHER', 
+  tx => { 
+    console.log(`Transaction hash: ${tx}`);
+  }
+);
+
+// Collect rewards from all validators where the account has staked
+await stakingContract.collectRewards(tx => { 
+  console.log(`Transaction hash: ${tx}`);
+});
+
+// Send some amount of ONE tokens to a receiver address
+await stakingContract.send(
+  'RECEIVER_ADDRESS', 
+  'AMOUNT_IN_ETHER', 
+  tx => { 
+    console.log(`Transaction hash: ${tx}`);
+  }
+);
+```
 
 ### Staking API
 
@@ -38,9 +77,74 @@ The `StakingAPI` class allows you to fetch information about validators, delegat
 
 Example:
 
-javascriptCopy code
+```js
+const { StakingAPI, NETWORK_TYPE } = require('harmony-staking-sdk');
 
-`import { StakingAPI } from 'harmony-staking-sdk';  const stakingApi = new StakingAPI({   apiUrl: 'https://api.stake.hmny.io' });  const validators = await stakingApi.fetchValidators('testnet');  console.log(validators);`
+const stakingApi = new StakingAPI({ apiUrl: 'https://api.stake.hmny.io' });
+
+// Fetch list of available networks
+stakingApi.fetchNetworks()
+  .then((networks) => {
+    console.log('Available networks:', networks);
+  })
+  .catch((err) => {
+    console.error('Error fetching networks:', err);
+  });
+
+// Fetch list of validators for the mainnet
+stakingApi.fetchValidators(NETWORK_TYPE.MAINNET)
+  .then((validators) => {
+    console.log('Validators:', validators);
+  })
+  .catch((err) => {
+    console.error('Error fetching validators:', err);
+  });
+
+// Fetch information about a specific validator
+const validatorAddress = 'one1w7nvheulzwprf9d9a3r8sqtv5q47qlqx7kured';
+
+stakingApi.fetchValidatorByAddress(NETWORK_TYPE.MAINNET, validatorAddress)
+  .then((validator) => {
+    console.log('Validator information:', validator);
+  })
+  .catch((err) => {
+    console.error(`Error fetching validator information for address ${validatorAddress}:`, err);
+  });
+
+// Fetch the avatar URL for a specific validator
+const avatarUrl = stakingApi.getValidatorAvatarUrl(NETWORK_TYPE.MAINNET, validatorAddress);
+
+console.log('Avatar URL:', avatarUrl);
+
+// Fetch historical data for a specific validator
+stakingApi.fetchValidatorHistory(NETWORK_TYPE.MAINNET, validatorAddress)
+  .then((history) => {
+    console.log('Validator history:', history);
+  })
+  .catch((err) => {
+    console.error(`Error fetching validator history for address ${validatorAddress}:`, err);
+  });
+
+// Fetch the list of delegations for a specific address
+const delegatorAddress = 'one13hnlv6vmyj6umjtf6kafwy6w3vq3ynzxs8tuzy';
+
+stakingApi.fetchDelegationsByAddress(NETWORK_TYPE.MAINNET, delegatorAddress)
+  .then((delegations) => {
+    console.log('Delegations:', delegations);
+  })
+  .catch((err) => {
+    console.error(`Error fetching delegations for address ${delegatorAddress}:`, err);
+  });
+
+// Fetch network information for the mainnet
+stakingApi.fetchNetworkInfo(NETWORK_TYPE.MAINNET)
+  .then((info) => {
+    console.log('Network information:', info);
+  })
+  .catch((err) => {
+    console.error('Error fetching network information:', err);
+  });
+```
 
 Contributing
 ------------
