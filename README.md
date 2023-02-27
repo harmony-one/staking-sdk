@@ -1,7 +1,11 @@
 Harmony Staking SDK
 ===================
 
-Harmony Staking SDK is a library that allows you to interact with the Harmony blockchain and delegate tokens to validators, undelegate them, collect staking rewards, and send tokens to other users.
+Harmony Staking SDK is a library that allows you to interact with the Harmony blockchain and delegate tokens to validators, undelegate them, collect staking rewards, and send tokens to other users. Get information about validators, user delegations and network analytics info.
+
+SDK may be easy using in react app - examle here https://github.com/harmony-one/staking-sdk.react-example
+
+Differs from the old version (https://github.com/harmony-one/sdk/tree/master/packages/harmony-staking), new version works on Web3 and allows users to do all staking operations via Metamask on frontend side. Also harmony-staking-sdk includes integration with the staking backend API and allows developers to get all the information about the validators, user's delegations, and all network analytical information (all information which we provide on staking dashboard page).
 
 Installation
 ------------
